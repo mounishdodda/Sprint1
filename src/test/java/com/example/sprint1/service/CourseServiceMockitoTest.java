@@ -76,7 +76,7 @@ class CourseServiceMockitoTest {
 	void findById() {
 		long input = 5;
 		CourseEntity course = new CourseEntity(5, "Java", "Java is a Programming Language");
-		Mockito.when(courseRepo.getById(input)).thenReturn(course);
+		Mockito.when(courseRepo.findById(input)).thenReturn(Optional.of(course));
 		CourseEntity course1 = courseServ.findById(input);
 		assertEquals(5, course1.getId());
 		assertEquals("Java", course1.getName());

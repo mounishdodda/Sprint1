@@ -77,7 +77,7 @@ class RoleServiceMockitoTest {
 	void findRoleById() {
 		long input = 1;
 		RoleEntity role = new RoleEntity(1,"ADMIN","Admin is the activity or process of organizing an institution or organization");
-		Mockito.when(roleRepo.getById(input)).thenReturn(role);
+		Mockito.when(roleRepo.findById(input)).thenReturn(Optional.of(role));
 		RoleEntity role1 = roleServ.getRoleById(input);
 		assertEquals(1, role1.getId());
 		assertEquals("ADMIN", role1.getName());

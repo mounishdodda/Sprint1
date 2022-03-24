@@ -6,7 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.sprint1.bean.CourseEntity;
 import com.example.sprint1.bean.RoleEntity;
+import com.example.sprint1.exception.DuplicateRecordException;
+import com.example.sprint1.exception.RoleNotFoundException;
 import com.example.sprint1.repository.IRoleRepository;
 
 @Service
@@ -17,8 +20,14 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public String addRole(RoleEntity role) {
+		Optional<RoleEntity> opt=roleRepo.findById(role.getId());
+		if(opt.isPresent()) {
+			throw new DuplicateRecordException("Duplicate Record Entered with id->"+role.getId());
+		}
+		else {
 		roleRepo.save(role);
-		return "Role Added Successfully";	
+		return "Role Added Successfully";
+		}	
 	}
 
 	@Override
@@ -29,8 +38,7 @@ public class RoleServiceImpl implements IRoleService {
 			return role1;
 		}
 		else {
-			//throw new RoleNotFoundException();
-		    return null;
+			throw new RoleNotFoundException("Could not fing Role with Id:"+role.getId());
 		}
 	}
 
@@ -39,8 +47,7 @@ public class RoleServiceImpl implements IRoleService {
 		
 		RoleEntity role1=roleRepo.getById(role.getId());
 		if(role1==null) {
-			//throw new RoleNotFoundException();
-			return null;
+			throw new RoleNotFoundException("Could not fing Role with Id:"+role.getId());
 		}
 		else {
 			roleRepo.save(role);
@@ -58,8 +65,7 @@ public class RoleServiceImpl implements IRoleService {
 	public RoleEntity deleteRoleById(long id) {
 		Optional<RoleEntity> opt=roleRepo.findById(id);
 		if(!opt.isPresent()) {
-			//throw new RoleNotFoundException();
-			return null;
+			throw new RoleNotFoundException("Could not fing Role with Id:"+id);
 		}
 		roleRepo.deleteById(id);
 		return opt.get();
@@ -73,8 +79,7 @@ public class RoleServiceImpl implements IRoleService {
 			return role;
 		}
 		else {
-			//throw new CourseNotFoundException();
-			return null;
+			throw new RoleNotFoundException("Could not find Role with name:"+name);
 		}
 	}
 
@@ -88,26 +93,30 @@ public class RoleServiceImpl implements IRoleService {
 			return role;
 		}
 		else {
-			//throw new CourseNotFoundException();
-			return null;
+			throw new RoleNotFoundException("Could not find Role with Id:"+id);
 		}
 	}
 
 	@Override
 	public RoleEntity getRoleById(long id) {
-		RoleEntity role = roleRepo.getById(id);
-		if(role==null) {
-			//throw new CourseNotFoundException();
-			return null;
+		Optional<RoleEntity> role = roleRepo.findById(id);
+		if(!role.isPresent()) {
+			throw new RoleNotFoundException("Could not find Role with Id:"+id);
 		}
 		else {
-		return role;
+		return role.get();
 	}
 	}
 
 	@Override
 	public RoleEntity getRoleByName(String name) {
-		return roleRepo.findByName(name);
+		RoleEntity role=roleRepo.findByName(name);
+		if(role==null) {
+			throw new RoleNotFoundException("Could not find Role with name:"+name);
+		}
+		else {
+			return role;
+		}
 	}
 
 }

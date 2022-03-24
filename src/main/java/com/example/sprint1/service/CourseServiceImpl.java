@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.sprint1.bean.CourseEntity;
+import com.example.sprint1.exception.CourseNotFoundException;
+import com.example.sprint1.exception.DuplicateRecordException;
 import com.example.sprint1.repository.ICourseRepository;
 
 @Service
@@ -17,16 +19,21 @@ public class CourseServiceImpl implements ICourseService {
 
 	@Override
 	public String add(CourseEntity course) {
+		Optional<CourseEntity> opt=courseRepo.findById(course.getId());
+		if(opt.isPresent()) {
+			throw new DuplicateRecordException("Duplicate Record Entered with id->"+course.getId());
+		}
+		else {
 		courseRepo.save(course);
 		return "Course Added Successfully";
+		}
 	}
 
 	@Override
 	public CourseEntity update(CourseEntity course) {
 		CourseEntity course1=courseRepo.getById(course.getId());
 		if(course1==null) {
-			//throw new CourseNotFoundException();
-			return null;
+			throw new CourseNotFoundException("Could not find the Course with id->"+course.getId());
 		}
 		else {
 			courseRepo.save(course);
@@ -38,7 +45,6 @@ public class CourseServiceImpl implements ICourseService {
 
 	@Override
 	public CourseEntity delete(CourseEntity course) {
-		
 		CourseEntity course1 = courseRepo.getById(course.getId());
 		
 		if(course1!=null) {
@@ -46,8 +52,7 @@ public class CourseServiceImpl implements ICourseService {
 			return course1;
 		}
 		else {
-			//throw new CourseNotFoundException();
-		    return null;
+			throw new CourseNotFoundException("Could not find the Course with id->"+course.getId());
 		}
 		
 	}
@@ -56,19 +61,24 @@ public class CourseServiceImpl implements ICourseService {
 
 	@Override
 	public CourseEntity findByName(String name) {
-		return courseRepo.findByName(name);
+		CourseEntity course=courseRepo.findByName(name);
+		if(course!=null) {
+			return course;
+		}
+		else {
+			throw new CourseNotFoundException("Could not find the Course with name->"+name);
+		}
 	}
 
 	@Override
 	public CourseEntity findById(long id) {
 		
-		CourseEntity course = courseRepo.getById(id);
-		if(course==null) {
-			//throw new CourseNotFoundException();
-			return null;
+		Optional<CourseEntity> opt=courseRepo.findById(id);
+		if(!opt.isPresent()) {
+			throw new CourseNotFoundException("Could not find the Course with id->"+id);
 		}
 		else {
-		return course;
+		return opt.get();
 	}
 	}
 
@@ -76,8 +86,7 @@ public class CourseServiceImpl implements ICourseService {
 	public CourseEntity deleteById(long id) {
 		Optional<CourseEntity> opt=courseRepo.findById(id);
 		if(!opt.isPresent()) {
-			//throw new CourseNotFoundException();
-			return null;
+			throw new CourseNotFoundException("Could not find the Course with id->"+id);
 		}
 		courseRepo.deleteById(id);
 		return opt.get();
@@ -91,8 +100,7 @@ public class CourseServiceImpl implements ICourseService {
 			return course;
 		}
 		else {
-			//throw new CourseNotFoundException();
-			return null;
+			throw new CourseNotFoundException("Could not find the Course with name->"+name);
 		}
 	}
 
@@ -105,16 +113,13 @@ public class CourseServiceImpl implements ICourseService {
 	@Override
 	public CourseEntity updateNameById(long id,String name) {
 		Optional<CourseEntity> opt=courseRepo.findById(id);
-		if(opt!=null) {
-			CourseEntity course=opt.get();
-			course.setName(name);
-			courseRepo.save(course);
-			return course;
+		if(!opt.isPresent()) {
+			throw new CourseNotFoundException("Could not find the Course with id->"+id);
 		}
-		else {
-			//throw new CourseNotFoundException();
-			return null;
-		}
+		CourseEntity course=opt.get();
+		course.setName(name);
+		courseRepo.save(course);
+		return course;
 		
 	}
 

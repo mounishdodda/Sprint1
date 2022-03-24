@@ -18,7 +18,7 @@ class CourseServiceTest {
 	
 	@Test
 	void addCourse() {
-		CourseEntity course=new CourseEntity(95,"Java","Java ia a Progtramming Language");
+		CourseEntity course=new CourseEntity(93,"Python","Python is a Programming Language");
 		String s=courseServ.add(course);
 		assertEquals("Course Added Successfully",s);
 	}
@@ -36,14 +36,14 @@ class CourseServiceTest {
 		assertEquals("Java ia a Progtramming Language",course.getDescription());
 	}
 	
-//	@Test
-//	void deleteCourse() {
-//		CourseEntity course=new CourseEntity(93,"Python","Python is a Programming Language");
-//		CourseEntity result=courseServ.delete(course);
-//		assertEquals("Python",result.getName());
-//		assertEquals("Python ia a Programming Language",result.getDescription());
-//		
-//	}
+	@Test
+	void deleteCourse() {
+		CourseEntity course=new CourseEntity(108,"Python","Python is a Programming Language");
+		CourseEntity result=courseServ.delete(course);
+		assertEquals("Python",result.getName());
+		assertEquals("Python ia a Programming Language",result.getDescription());
+		
+	}
 	
 	@Test
 	void getByName() {

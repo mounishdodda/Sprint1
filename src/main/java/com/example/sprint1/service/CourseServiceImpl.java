@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.sprint1.bean.CourseEntity;
+import com.example.sprint1.dto.CourseOutputDto;
 import com.example.sprint1.exception.CourseNotFoundException;
 import com.example.sprint1.exception.DuplicateRecordException;
 import com.example.sprint1.repository.ICourseRepository;
@@ -122,5 +123,20 @@ public class CourseServiceImpl implements ICourseService {
 		return course;
 		
 	}
+
+//	@Override
+//	public CourseOutputDto addDto(CourseEntity course) {
+//		Optional<CourseEntity> opt=courseRepo.findById(course.getId());
+//		if(opt.isPresent()) {
+//			throw new DuplicateRecordException("Duplicate Record Entered with id->"+course.getId());
+//		}
+//		else {
+//			CourseEntity course1=courseRepo.save(course);
+//			CourseOutputDto res=new CourseOutputDto();
+//			res.setId(course1.getId());
+//			res.setName(course1.getName());
+//			return res;
+//		}
+//	}
 
 }

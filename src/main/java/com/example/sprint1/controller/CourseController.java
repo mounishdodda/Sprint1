@@ -2,6 +2,7 @@ package com.example.sprint1.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.sprint1.bean.CourseEntity;
+import com.example.sprint1.dto.CourseOutputDto;
 import com.example.sprint1.service.ICourseService;
 
 @RestController
@@ -84,5 +86,12 @@ public class CourseController {
 		List<CourseEntity> course = courseServ.getAllCourses();
 		return new ResponseEntity<>(course, HttpStatus.OK);
 	}
+	
+//	// Output Dto
+//	@GetMapping("/addDto")
+//	ResponseEntity<CourseOutputDto> addDto(@RequestBody CourseEntity course) {
+//		CourseOutputDto course1 = courseServ.addDto(course);
+//		return new ResponseEntity<>(course1, HttpStatus.OK);
+//	}
 
 }

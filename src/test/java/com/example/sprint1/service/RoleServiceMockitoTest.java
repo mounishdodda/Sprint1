@@ -15,8 +15,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-
+import com.example.sprint1.bean.CourseEntity;
 import com.example.sprint1.bean.RoleEntity;
+import com.example.sprint1.dto.CourseOutputDto;
+import com.example.sprint1.dto.RoleOutputDto;
 import com.example.sprint1.repository.IRoleRepository;
 
 @ExtendWith(SpringExtension.class)
@@ -130,6 +132,15 @@ class RoleServiceMockitoTest {
 		Mockito.when(roleRepo.findAll()).thenReturn(rlist);
 		List<RoleEntity> roles=roleServ.getAllRoles();
 		assertEquals(3,roles.size());
+	}
+	
+	@Test
+	void addDto() {
+	RoleEntity role = new RoleEntity(5, "Manager", "Manager is the Highest Post");
+	//Mockito.when(courseRepo.findById(course.getId())).thenReturn(Optional.of(null));
+	Mockito.when(roleRepo.save(role)).thenReturn(role);
+	RoleOutputDto res=roleServ.addDto(role);
+	assertEquals("Manager",res.getName());
 	}
 
 

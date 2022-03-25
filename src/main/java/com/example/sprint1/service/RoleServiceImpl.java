@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.sprint1.bean.CourseEntity;
 import com.example.sprint1.bean.RoleEntity;
+import com.example.sprint1.dto.CourseOutputDto;
+import com.example.sprint1.dto.RoleOutputDto;
 import com.example.sprint1.exception.DuplicateRecordException;
 import com.example.sprint1.exception.RoleNotFoundException;
 import com.example.sprint1.repository.IRoleRepository;
@@ -118,5 +120,24 @@ public class RoleServiceImpl implements IRoleService {
 			return role;
 		}
 	}
+	
+	@Override
+	public RoleOutputDto addDto(RoleEntity role) {
+		
+		Optional<RoleEntity> c1=roleRepo.findById(role.getId());
+		
+		if(c1.isPresent()) {
+			throw new DuplicateRecordException("Duplicate Record Entered with id->"+role.getId());
+		}
+		else {
+		
+		RoleEntity c2=roleRepo.save(role);
+		RoleOutputDto res=new RoleOutputDto();
+		res.setName(c2.getName());
+		return res;
+		
+	}
+
+  }
 
 }

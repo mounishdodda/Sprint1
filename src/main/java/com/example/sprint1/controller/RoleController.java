@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.sprint1.bean.CourseEntity;
 import com.example.sprint1.bean.RoleEntity;
+import com.example.sprint1.dto.CourseOutputDto;
+import com.example.sprint1.dto.RoleOutputDto;
 import com.example.sprint1.service.IRoleService;
 
 @RestController
@@ -84,5 +87,11 @@ public class RoleController {
 		RoleEntity role = roleServ.getRoleById(id);
 		return new ResponseEntity<>(role, HttpStatus.OK);
 	}
+	// Output Dto
+		@PostMapping("/addRoleDto")
+		ResponseEntity<RoleOutputDto> addDto(@RequestBody RoleEntity role) {
+			RoleOutputDto role1 = roleServ.addDto(role);
+			return new ResponseEntity<>(role1, HttpStatus.OK);
+		}
 
 }

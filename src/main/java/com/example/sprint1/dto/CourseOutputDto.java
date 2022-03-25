@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CourseOutputDto {
 	
-	private long id;
 	private String name;
 
 }

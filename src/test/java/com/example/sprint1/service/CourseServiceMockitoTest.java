@@ -15,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.example.sprint1.bean.CourseEntity;
+import com.example.sprint1.dto.CourseOutputDto;
 import com.example.sprint1.repository.ICourseRepository;
 
 @ExtendWith(SpringExtension.class)
@@ -129,6 +130,15 @@ class CourseServiceMockitoTest {
 		Mockito.when(courseRepo.findAll()).thenReturn(clist);
 		List<CourseEntity> courses=courseServ.getAllCourses();
 		assertEquals(3,courses.size());
+	}
+	
+	@Test
+	void addDto() {
+	CourseEntity course = new CourseEntity(5, "Java", "Java is a Programming Language");
+	//Mockito.when(courseRepo.findById(course.getId())).thenReturn(Optional.of(null));
+	Mockito.when(courseRepo.save(course)).thenReturn(course);
+	CourseOutputDto res=courseServ.addDto(course);
+	assertEquals("Java",res.getName());
 	}
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.sprint1.bean.CourseEntity;
+import com.example.sprint1.dto.CourseInputDto;
 import com.example.sprint1.dto.CourseOutputDto;
 import com.example.sprint1.service.ICourseService;
 
@@ -87,11 +88,11 @@ public class CourseController {
 		return new ResponseEntity<>(course, HttpStatus.OK);
 	}
 	
-//	// Output Dto
-//	@GetMapping("/addDto")
-//	ResponseEntity<CourseOutputDto> addDto(@RequestBody CourseEntity course) {
-//		CourseOutputDto course1 = courseServ.addDto(course);
-//		return new ResponseEntity<>(course1, HttpStatus.OK);
-//	}
+	// Output Dto
+	@PostMapping("/addDto")
+	ResponseEntity<CourseOutputDto> addDto(@RequestBody CourseEntity course) {
+		CourseOutputDto course1 = courseServ.addDto(course);
+		return new ResponseEntity<>(course1, HttpStatus.OK);
+	}
 
 }

@@ -25,9 +25,9 @@ class RoleServiceTest {
 	
 	@Test
 	void updateRole() {
-		RoleEntity role=new RoleEntity(4,"PRINCIPAL","Pricipal of Organization");
+		RoleEntity role=new RoleEntity(2,"Faculty","Faculty");
 		RoleEntity result=roleServ.updateRole(role);
-		assertEquals("Pricipal of Organization",result.getDescription());
+		assertEquals("Faculty",result.getDescription());
 	}
 	
 	@Test
@@ -36,14 +36,14 @@ class RoleServiceTest {
 		assertEquals("Head of Department",role.getDescription());
 	}
 	
-//	@Test
-//	void deleteRole() {
-//		RoleEntity role=new RoleEntity(5,"Mounish","Head of Department");
-//		RoleEntity result=roleServ.deleteRole(role);
-//		assertEquals("Mounish",result.getName());
-//		//assertEquals("Python ia a Programming Language",result.getDescription());
-//		
-//	}
+	@Test
+	void deleteRole() {
+		RoleEntity role=new RoleEntity(5,"HOD","Head of Department");
+		RoleEntity result=roleServ.deleteRole(role);
+		assertEquals("HOD",result.getName());
+		//assertEquals("Python ia a Programming Language",result.getDescription());
+		
+	}
 	
 	@Test
 	void getByName() {
@@ -70,7 +70,7 @@ class RoleServiceTest {
 	}
 	
 	@Test
-	void getAllCourses() {
+	void getAllRoles() {
 		List<RoleEntity> roleList=roleServ.getAllRoles();
 		assertEquals(3,roleList.size());
 	}

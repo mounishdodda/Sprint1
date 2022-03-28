@@ -47,7 +47,7 @@ class CourseServiceMockitoTest {
 	void deleteCourse() {
 		CourseEntity course=new CourseEntity(5,"JAVA","JAVA ia a Programming Language");
 		Mockito.when(courseRepo.findById(course.getId())).thenReturn(Optional.of(course));
-//		Mockito.when(courseRepo.delete(course)).thenReturn(Mockito.doNothing());
+        Mockito.doNothing().when(courseRepo).delete(course);
 		CourseEntity result= courseServ.delete(course);
 		assertEquals(5,result.getId());
 		assertEquals("JAVA",result.getName());

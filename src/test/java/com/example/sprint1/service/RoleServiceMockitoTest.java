@@ -47,7 +47,7 @@ class RoleServiceMockitoTest {
 	void deleteRole() {
 		RoleEntity role = new RoleEntity(1,"ADMIN","Admin is the activity or process of organizing an institution or organization");
 		Mockito.when(roleRepo.findById(role.getId())).thenReturn(Optional.of(role));
-//		Mockito.when(courseRepo.delete(course)).thenReturn(Mockito.doNothing());
+		Mockito.doNothing().when(roleRepo).delete(role);
 		RoleEntity result= roleServ.deleteRole(role);
 		assertEquals(1, result.getId());
 		assertEquals("ADMIN", result.getName());

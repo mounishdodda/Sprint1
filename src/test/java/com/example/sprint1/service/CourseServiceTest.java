@@ -25,36 +25,38 @@ class CourseServiceTest {
 	
 	@Test
 	void updateCourse() {
-		CourseEntity course=new CourseEntity(104,"Cricket","Cricket is a Sport");
+		CourseEntity course=new CourseEntity(122,"Cricket","Cricket is a Sport");
 		CourseEntity result=courseServ.update(course);
 		assertEquals("Cricket",result.getName());
 	}
 	
 	@Test
 	void updateNameById() {
-		CourseEntity course=courseServ.updateNameById(105,"Android");
-		assertEquals("Java ia a Progtramming Language",course.getDescription());
+		CourseEntity course=courseServ.updateNameById(122,"Android");
+		assertEquals("Cricket is a Sport",course.getDescription());
+		assertEquals("Android",course.getName());
+		
 	}
 	
 	@Test
 	void deleteCourse() {
-		CourseEntity course=new CourseEntity(108,"Python","Python is a Programming Language");
+		CourseEntity course=new CourseEntity(122,"Android","Cricket is a Sport");
 		CourseEntity result=courseServ.delete(course);
-		assertEquals("Python",result.getName());
-		assertEquals("Python ia a Programming Language",result.getDescription());
+		assertEquals("Android",result.getName());
+		assertEquals("Cricket is a Sport",result.getDescription());
 		
 	}
 	
 	@Test
 	void getByName() {
 		CourseEntity course=courseServ.findByName("CSS");
-        assertEquals(101,course.getId());
+        assertEquals(121,course.getId());
 	}
 	
 	@Test
 	void getById() {
-		CourseEntity course=courseServ.findById(100);
-        assertEquals("Html",course.getName());
+		CourseEntity course=courseServ.findById(121);
+        assertEquals("CSS",course.getName());
 	}
 	
 	@Test
@@ -72,7 +74,7 @@ class CourseServiceTest {
 	@Test
 	void getAllCourses() {
 		List<CourseEntity> courseList=courseServ.getAllCourses();
-		assertEquals(6,courseList.size());
+		assertEquals(4,courseList.size());
 	}
 	
 }

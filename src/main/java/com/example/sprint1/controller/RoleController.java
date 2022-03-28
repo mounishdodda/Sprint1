@@ -2,6 +2,7 @@ package com.example.sprint1.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.sprint1.bean.CourseEntity;
 import com.example.sprint1.bean.RoleEntity;
-import com.example.sprint1.dto.CourseOutputDto;
 import com.example.sprint1.dto.RoleOutputDto;
 import com.example.sprint1.service.IRoleService;
 

@@ -1,9 +1,7 @@
 package com.example.sprint1.service;
 
 import java.util.List;
-
 import com.example.sprint1.bean.CourseEntity;
-import com.example.sprint1.dto.CourseInputDto;
 import com.example.sprint1.dto.CourseOutputDto;
 
 public interface ICourseService {

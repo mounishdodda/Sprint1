@@ -1,13 +1,9 @@
 package com.example.sprint1.service;
-
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.sprint1.bean.CourseEntity;
-import com.example.sprint1.dto.CourseInputDto;
 import com.example.sprint1.dto.CourseOutputDto;
 import com.example.sprint1.exception.CourseNotFoundException;
 import com.example.sprint1.exception.DuplicateRecordException;
@@ -33,8 +29,8 @@ public class CourseServiceImpl implements ICourseService {
 
 	@Override
 	public CourseEntity update(CourseEntity course) {
-		CourseEntity course1=courseRepo.getById(course.getId());
-		if(course1==null) {
+		Optional<CourseEntity> opt=courseRepo.findById(course.getId());
+		if(!opt.isPresent()) {
 			throw new CourseNotFoundException("Could not find the Course with id->"+course.getId());
 		}
 		else {
@@ -47,16 +43,14 @@ public class CourseServiceImpl implements ICourseService {
 
 	@Override
 	public CourseEntity delete(CourseEntity course) {
-		CourseEntity course1 = courseRepo.getById(course.getId());
-		
-		if(course1!=null) {
-			courseRepo.delete(course);
-			return course1;
-		}
-		else {
+		Optional<CourseEntity> opt=courseRepo.findById(course.getId());
+		if(!opt.isPresent()) {
 			throw new CourseNotFoundException("Could not find the Course with id->"+course.getId());
 		}
-		
+		else {
+			courseRepo.delete(course);
+			return course;
+		}	
 	}
 	
 	

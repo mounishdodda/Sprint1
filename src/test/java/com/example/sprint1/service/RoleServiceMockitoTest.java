@@ -2,6 +2,7 @@ package com.example.sprint1.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,10 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import com.example.sprint1.bean.CourseEntity;
 import com.example.sprint1.bean.RoleEntity;
-import com.example.sprint1.dto.CourseOutputDto;
 import com.example.sprint1.dto.RoleOutputDto;
 import com.example.sprint1.repository.IRoleRepository;
 
@@ -37,7 +35,7 @@ class RoleServiceMockitoTest {
 	@Test
 	void updateRole() {
 		RoleEntity role = new RoleEntity(1,"ADMIN","Admin is the activity or process of organizing an institution or organization");
-		Mockito.when(roleRepo.getById(role.getId())).thenReturn(role);
+		Mockito.when(roleRepo.findById(role.getId())).thenReturn(Optional.of(role));
 		Mockito.when(roleRepo.save(role)).thenReturn(role);
 		RoleEntity result = roleServ.updateRole(role);
 		assertEquals(1, result.getId());
@@ -48,7 +46,7 @@ class RoleServiceMockitoTest {
 	@Test
 	void deleteRole() {
 		RoleEntity role = new RoleEntity(1,"ADMIN","Admin is the activity or process of organizing an institution or organization");
-		Mockito.when(roleRepo.getById(role.getId())).thenReturn(role);
+		Mockito.when(roleRepo.findById(role.getId())).thenReturn(Optional.of(role));
 //		Mockito.when(courseRepo.delete(course)).thenReturn(Mockito.doNothing());
 		RoleEntity result= roleServ.deleteRole(role);
 		assertEquals(1, result.getId());

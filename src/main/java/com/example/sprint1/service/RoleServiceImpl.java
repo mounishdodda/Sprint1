@@ -1,14 +1,9 @@
 package com.example.sprint1.service;
-
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.example.sprint1.bean.CourseEntity;
 import com.example.sprint1.bean.RoleEntity;
-import com.example.sprint1.dto.CourseOutputDto;
 import com.example.sprint1.dto.RoleOutputDto;
 import com.example.sprint1.exception.DuplicateRecordException;
 import com.example.sprint1.exception.RoleNotFoundException;
@@ -34,22 +29,22 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public RoleEntity deleteRole(RoleEntity role) {
-        RoleEntity role1 = roleRepo.getById(role.getId());
-		if(role1!=null) {
-			roleRepo.delete(role);
-			return role1;
+		Optional<RoleEntity> opt=roleRepo.findById(role.getId());
+		if(!opt.isPresent()) {
+			throw new RoleNotFoundException("Could not find Role with Id:"+role.getId());
 		}
 		else {
-			throw new RoleNotFoundException("Could not fing Role with Id:"+role.getId());
+			roleRepo.delete(role);
+			return role;
 		}
+		
 	}
 
 	@Override
 	public RoleEntity updateRole(RoleEntity role) {
-		
-		RoleEntity role1=roleRepo.getById(role.getId());
-		if(role1==null) {
-			throw new RoleNotFoundException("Could not fing Role with Id:"+role.getId());
+		Optional<RoleEntity> opt=roleRepo.findById(role.getId());
+		if(!opt.isPresent()) {
+			throw new RoleNotFoundException("Could not find Role with Id:"+role.getId());
 		}
 		else {
 			roleRepo.save(role);
@@ -88,7 +83,7 @@ public class RoleServiceImpl implements IRoleService {
 	@Override
 	public RoleEntity updateRoleNameById(long id, String name) {
 		Optional<RoleEntity> opt=roleRepo.findById(id);
-		if(opt!=null) {
+		if(opt.isPresent()) {
 			RoleEntity role=opt.get();
 			role.setName(name);
 			roleRepo.save(role);

@@ -2,9 +2,8 @@ package com.example.sprint1.controller;
 
 import java.util.List;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,13 +37,13 @@ public class CourseController {
 		CourseEntity updatedCourse = courseServ.update(course);
 		return new ResponseEntity<>(updatedCourse, HttpStatus.OK); // 200 Ok
 	}
-	
+
 	// Update Course Name
-		@PutMapping("/updateNameById/{id}")
-		ResponseEntity<CourseEntity> updateNameById(@PathVariable("id") long id,@RequestBody String name) {
-			CourseEntity updatedCourse = courseServ.updateNameById(id, name);
-			return new ResponseEntity<>(updatedCourse, HttpStatus.OK); // 200 Ok
-		}
+	@PutMapping("/updateNameById/{id}")
+	ResponseEntity<CourseEntity> updateNameById(@PathVariable("id") long id, @RequestBody String name) {
+		CourseEntity updatedCourse = courseServ.updateNameById(id, name);
+		return new ResponseEntity<>(updatedCourse, HttpStatus.OK); // 200 Ok
+	}
 
 	// Delete Course
 	@DeleteMapping("/deleteCourse")
@@ -65,6 +64,13 @@ public class CourseController {
 	ResponseEntity<CourseEntity> findById(@PathVariable("id") long id) {
 		CourseEntity course = courseServ.findById(id);
 		return new ResponseEntity<>(course, HttpStatus.OK);
+	}
+	
+	@GetMapping("/courses/pagination/{offset}/{pageSize}")
+	ResponseEntity<Page<CourseEntity>> getAllCoursesWithPagination(@PathVariable("offset") int offset,
+			@PathVariable("pageSize") int pageSize) {
+		Page<CourseEntity> courses = courseServ.getAllCoursesWithPagination(offset, pageSize);
+		return new ResponseEntity<>(courses, HttpStatus.OK);
 	}
 
 	// Delete Course By Id
@@ -87,7 +93,7 @@ public class CourseController {
 		List<CourseEntity> course = courseServ.getAllCourses();
 		return new ResponseEntity<>(course, HttpStatus.OK);
 	}
-	
+
 	// Output Dto
 	@PostMapping("/addDto")
 	ResponseEntity<CourseOutputDto> addDto(@RequestBody CourseEntity course) {

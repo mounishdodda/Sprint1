@@ -1,6 +1,9 @@
 package com.example.sprint1.service;
 
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+
 import com.example.sprint1.bean.CourseEntity;
 import com.example.sprint1.dto.CourseOutputDto;
 
@@ -16,5 +19,6 @@ public interface ICourseService {
 	public CourseEntity findByName(String name);
 	public CourseEntity findById(long id);
 	public List<CourseEntity> getAllCourses();
+	Page<CourseEntity> getAllCoursesWithPagination(int offset, int pageSize);
 
 }

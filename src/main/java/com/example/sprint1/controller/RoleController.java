@@ -2,8 +2,8 @@ package com.example.sprint1.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.sprint1.bean.CourseEntity;
 import com.example.sprint1.bean.RoleEntity;
 import com.example.sprint1.dto.RoleOutputDto;
 import com.example.sprint1.service.IRoleService;
@@ -44,7 +45,7 @@ public class RoleController {
 		RoleEntity updatedRole = roleServ.updateRoleNameById(id, name);
 		return new ResponseEntity<>(updatedRole, HttpStatus.OK);
 	}
-	
+
 	// Delete Role
 	@DeleteMapping("/deleteRole")
 	ResponseEntity<RoleEntity> deleteRole(@RequestBody RoleEntity role) {
@@ -86,11 +87,19 @@ public class RoleController {
 		RoleEntity role = roleServ.getRoleById(id);
 		return new ResponseEntity<>(role, HttpStatus.OK);
 	}
+	
+	@GetMapping("/roles/pagination/{offset}/{pageSize}")
+	ResponseEntity<Page<RoleEntity>> getAllRolesWithPagination(@PathVariable("offset") int offset,
+			@PathVariable("pageSize") int pageSize) {
+		Page<RoleEntity> roles = roleServ.getAllRolesWithPagination(offset, pageSize);
+		return new ResponseEntity<>(roles, HttpStatus.OK);
+	}
+
 	// Output Dto
-		@PostMapping("/addRoleDto")
-		ResponseEntity<RoleOutputDto> addDto(@RequestBody RoleEntity role) {
-			RoleOutputDto role1 = roleServ.addDto(role);
-			return new ResponseEntity<>(role1, HttpStatus.OK);
-		}
+	@PostMapping("/addRoleDto")
+	ResponseEntity<RoleOutputDto> addDto(@RequestBody RoleEntity role) {
+		RoleOutputDto role1 = roleServ.addDto(role);
+		return new ResponseEntity<>(role1, HttpStatus.OK);
+	}
 
 }

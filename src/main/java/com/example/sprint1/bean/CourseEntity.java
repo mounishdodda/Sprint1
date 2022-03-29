@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -22,10 +23,12 @@ public class CourseEntity {
 	@Id
 	@GeneratedValue
 	private long id;
+	@NotEmpty(message = "Name shouldn't be empty")
 	private String name;
+	@NotEmpty(message = "Description shouldn't be empty")
 	private String description;
 	
-	
+	//Constructor using fields
 	public CourseEntity(long id, String name, String description) {
 		super();
 		this.id = id;

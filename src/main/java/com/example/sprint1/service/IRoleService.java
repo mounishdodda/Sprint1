@@ -1,6 +1,10 @@
 package com.example.sprint1.service;
 
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+
+import com.example.sprint1.bean.CourseEntity;
 import com.example.sprint1.bean.RoleEntity;
 import com.example.sprint1.dto.RoleOutputDto;
 
@@ -16,4 +20,5 @@ public interface IRoleService {
 	List<RoleEntity> getAllRoles();
 	RoleEntity getRoleById(long id);
 	RoleEntity getRoleByName(String name);
+	Page<RoleEntity> getAllRolesWithPagination(int offset, int pageSize);
 }
